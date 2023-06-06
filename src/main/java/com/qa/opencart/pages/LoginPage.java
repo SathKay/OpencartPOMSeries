@@ -19,7 +19,7 @@ public class LoginPage {
 	private By emailId = By.id("input-email");
 	private By password = By.id("input-password");
 	private By loginBtn = By.xpath("//button[@type='submit']");
-	private By forgotPwdLink = By.linkText("Forgotten Password1");
+	private By forgotPwdLink = By.linkText("Forgotten Password");
 	private By adminEmailId = By.id("input-username");
 	private By adminPassword = By.id("input-password");
 	private By registerLink = By.linkText("Register");

@@ -20,17 +20,17 @@
 		</classes>
 	</test>
 
-	<!-- <test name="Register Page Test">
+	<test name="Register Page Test">
 		<classes>
 			<class name="com.qa.opencart.tests.RegisterPageTest" />
 		</classes>
-	</test> -->
+	</test>
 	
-	<!-- <test name="Accounts page Test">
+	<test name="Accounts page Test">
 		<classes>
 			<class name="com.qa.opencart.tests.AccountsPageTest" />
 		</classes>
-	</test> -->
+	</test>
 
 	<!-- <test name="Shopping Cart page Test">
 		<classes>

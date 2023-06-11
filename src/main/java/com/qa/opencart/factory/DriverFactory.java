@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
@@ -12,6 +14,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -41,14 +44,29 @@ public class DriverFactory {
 		if(browserName.equalsIgnoreCase("chrome")) {
 			//ChromeOptions option  = new ChromeOptions();
 			//option.addArguments("--remote-allow-origins=*");
-			WebDriverManager.chromedriver().setup();
-			//driver = new ChromeDriver(optionsManager.getChromeOptions());
-			tldriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			
+			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+				init_remoteDriver("chrome");
+			}
+			else {
+				WebDriverManager.chromedriver().setup();
+				//driver = new ChromeDriver(optionsManager.getChromeOptions());
+				tldriver.set(new ChromeDriver(optionsManager.getChromeOptions()));		
+			}
+			
 		}
 		else if(browserName.equalsIgnoreCase("firefox")) {
-			WebDriverManager.firefoxdriver().setup();
-			//driver = new FirefoxDriver(optionsManager.getFirefoxOptions());
-			tldriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+			
+
+			if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+				init_remoteDriver("firefox");
+			}
+			else {
+				WebDriverManager.firefoxdriver().setup();
+				//driver = new FirefoxDriver(optionsManager.getFirefoxOptions());
+				tldriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+			}
+			
 		}
 		else if(browserName.equalsIgnoreCase("safari")) {
 			//driver = new SafariDriver();
@@ -64,6 +82,27 @@ public class DriverFactory {
 		return getDriver();
 	}
 	
+	private void init_remoteDriver(String brower) {
+		
+		System.out.println("Running the test cases in the selenium grid in the browser : "+brower);
+		
+		if(brower.equals("chrome")) {
+			try {
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+		else if(brower.equals("firefox")){
+			try {
+				tldriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getFirefoxOptions()));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
 	/**
 	 * This method is used to initialize the properties
 	 * @return this method return the Properties class reference

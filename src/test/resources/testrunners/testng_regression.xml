@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="Opencart Regression Suite" thread-count="1"
+<suite name="Opencart Regression Suite" thread-count="2"
 	parallel="tests" verbose="4">
 
 	<listeners>
